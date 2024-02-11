@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model administrador {
+  id    String @id @default(uuid()) @db.VarChar(36)
+  nome  String @unique(map: "nome") @db.VarChar(30)
+  email String @unique(map: "email") @db.VarChar(50)
+  senha String @db.VarChar(20)
+  createAt DateTime @default(now())
+}
+
+model fazenda {
+  id              String       @id @default(uuid()) @db.VarChar(36)
+  codigo          String       @unique(map: "codigo") @db.VarChar(20)
+  nome            String       @db.VarChar(40)
+  distrito        String?      @db.VarChar(40)
+  bairro          String?      @db.VarChar(40)
+  foto            Bytes        @db.Blob
+  id_proprietario String       @db.VarChar(36)
+  id_municipio    String       @db.VarChar(36)
+  proprietario    proprietario @relation(fields: [id_proprietario], references: [id], onUpdate: Restrict, map: "fazenda_ibfk_1")
+  municipio       municipio    @relation(fields: [id_municipio], references: [id], onUpdate: Restrict, map: "fazenda_ibfk_2")
+
+  @@index([id_municipio], map: "id_municipio")
+  @@index([id_proprietario], map: "id_proprietario")
+}
+
+model municipio {
+  id           String    @id @default(uuid()) @db.VarChar(36)
+  nome         String    @unique(map: "nome") @db.VarChar(30)
+  id_provincia String    @db.VarChar(36)
+  fazenda      fazenda[]
+  proprietario proprietario[]
+  provincia    provincia @relation(fields: [id_provincia], references: [id], onUpdate: Restrict, map: "municipio_ibfk_1")
+
+  @@index([id_provincia], map: "id_provincia")
+}
+
+model proprietario {
+  id       String    @id @default(uuid()) @db.VarChar(36)
+  nome     String    @unique(map: "nome") @db.VarChar(30)
+  nif      String    @unique(map: "nif") @db.VarChar(30)
+  distrito String    @db.VarChar(30)
+  bairro   String    @db.VarChar(30)
+  id_municipio String    @db.VarChar(36)
+  municipio    municipio @relation(fields: [id_municipio], references: [id], onUpdate: Restrict, map: "municipio_ibfk_2")
+  fazenda  fazenda[]
+}
+
+model provincia {
+  id        String      @id @default(uuid()) @db.VarChar(36)
+  nome      String      @unique(map: "nome") @db.VarChar(30)
+  municipio municipio[]
+}

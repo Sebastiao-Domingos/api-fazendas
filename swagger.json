@@ -1,0 +1,736 @@
+{
+    "openapi" : "3.0.1",
+    "info" : {
+        "title" : "Fazendas",
+        "description" :"Documnetation from fazendas api",
+        "version" : "1.0.0"   
+    },
+    "basePath" : "/",
+    "components" : {
+        "securitySchemes" : {
+            "bearerAuth" : {
+                "type" : "http",
+                "scheme" : "bearer",
+                "bearerFormat" : "JWT"
+            }
+        }
+    },
+    "paths" : {
+        "/administradores" : {
+            "post" : {
+                "tags" : ["Administrador"],
+                "description": "criar administrador",
+                "summary" : "Rota que cria a administrador",
+               "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "nome" : {
+                                        "typ" : "string"
+                                    },
+                                    "email" : {
+                                        "type" : "string"
+                                    },
+                                    "senha" : {
+                                        "type": "string"
+                                    }
+                                },
+                                "example" : {
+                                    "nome" :"sebastiao",
+                                    "email" : "seba@gmail.com",
+                                    "senha" : "1234556"
+                                }
+                            }
+                        }
+                    }
+               },
+               "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a administrador"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "get" : {
+                "tags" : ["Administrador"],
+                "descrption" : "listar todas as administradores",
+                "summary" : "Rota que lista todas as administradores",
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a administrador"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        },
+        "/administradores/{id}" : {
+            "get" : {
+                "tags" : ["Administrador"],
+                "summary" :"Rota que pega a administrador pelo id",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "name":"id",
+                    "required" : true
+                }],
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao pegar o administrador"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "patch" : {
+                "tags" : ["Administrador"],
+                "summary" :"Rota que atualiza a administrador",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "required" : true,
+                    "name" : "id"
+                }],
+               "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "nome" : {
+                                        "typ" : "string"
+                                    },
+                                    "email" : {
+                                        "type" : "string"
+                                    },
+                                    "senha" : {
+                                        "type": "string"
+                                    }
+                                },
+                                "example" : {
+                                    "nome" :"sebastiao",
+                                    "email" : "seba@gmail.com",
+                                    "senha" : "1234556"
+                                }
+                            }
+                        }
+                    }
+               },
+               "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a administrador"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "delete" : {
+                "tags" : ["Administrador"],
+                "summary" :"Rota que elimina a administrador",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "required" : true,
+                    "name" : "id"
+                }],
+               "responses" : {
+                    "204" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a administrador"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        },
+        "/proprietarios" : {
+            "post" : {
+                "tags" : ["Proprietarios"],
+                "description": "criar proprietario",
+                "summary" : "Rota que cria a proprietario",
+               "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "nome" : {
+                                        "typ" : "string"
+                                    },
+                                    "nif" : {
+                                        "type" : "string"
+                                    },
+                                    "distrito" : {
+                                        "type": "string"
+                                    },
+                                    "bairro" : {
+                                        "type": "string"
+                                    },
+                                    "id_municipio" : {
+                                        "type": "string"
+                                    }
+                                },
+                                "example" : {
+                                    "nome" :"sebastiao",
+                                    "nif" : "23234DF233",
+                                    "distrito" : "Rangel",
+                                    "bairro" : "Dona Malha",
+                                    "id_municipio" : "werwer-werwer-wewrerw-qweqwe"
+                                }
+                            }
+                        }
+                    }
+               },
+               "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a proprietario"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "get" : {
+                "tags" : ["Proprietarios"],
+                "descrption" : "listar todas as proprietarioes",
+                "summary" : "Rota que lista todas as proprietarios",
+                "parameters" : [
+                    {
+                        "in" : "query",
+                        "currentPage" : "currentPage",
+                        "type" : "number",
+                        "name":"currentPage"
+                    },
+                    {
+                        "in" : "query",
+                        "perPage" : "perPage",
+                        "type" : "number",
+                        "name":"perPage"
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a proprietario"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        },
+        "/proprietariosFindByName" : {
+            "get" : {
+                "tags" : ["Proprietarios"],
+                "summary" :"Rota que pega a provincia pelo nome",
+                "parameters" : [
+                    {
+                        "in" : "query",
+                        "nome" : "nome",
+                        "type" : "string",
+                        "name":"nome"
+                    },
+                    {
+                        "in" : "query",
+                        "nif" : "nif",
+                        "type" : "string",
+                        "name":"nif"
+                    },
+                    {
+                        "in" : "query",
+                        "bairro" : "bairro",
+                        "type" : "string",
+                        "name":"bairro"
+                    },
+                    {
+                        "in" : "query",
+                        "distrito" : "distrito",
+                        "type" : "string",
+                        "name":"distrito"
+                    },
+                    {
+                        "in" : "query",
+                        "id_municipio" : "id_municipio",
+                        "type" : "string",
+                        "name":"id_municipio"
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a provincia"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        },
+        "/proprietarios/{id}" : {
+            "get" : {
+                "tags" : ["Proprietarios"],
+                "summary" :"Rota que pega a proprietario pelo id",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "name":"id",
+                    "required" : true
+                }],
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao pegar o proprietario"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "put" : {
+                "tags" : ["Proprietarios"],
+                "summary" :"Rota que atualiza a proprietario",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "required" : true,
+                    "name" : "id"
+                }],
+               "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "nome" : {
+                                        "type" : "string"
+                                    },
+                                    "nif" : {
+                                        "type" : "string"
+                                    },
+                                    "id_municipio" : {
+                                        "type": "string"
+                                    },
+                                    "distrito" : {
+                                        "type": "string"
+                                    },
+                                    "bairro" : {
+                                        "type": "string"
+                                    }
+                                },
+                                "example" : {
+                                    "nome" :"sebastiao",
+                                    "nif" : "23234DF233",
+                                    "id_municipio" : "werwer-werwer-wewrerw-qweqwe",
+                                    "distrito" : "Rangel",
+                                    "bairro" : "Dona Malha"
+                                }
+                            }
+                        }
+                    }
+               },
+               "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a proprietario"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "delete" : {
+                "tags" : ["Proprietarios"],
+                "summary" :"Rota que elimina a proprietario",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "required" : true,
+                    "name" : "id"
+                }],
+               "responses" : {
+                    "204" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a proprietario"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        },
+        "/provincias" : {
+            "post" : {
+                "tags" : ["Províncias"],
+                "description": "criar provincia",
+                "summary" : "Rota que cria a provincia",
+               "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "nome" : {
+                                        "typ" : "string"
+                                    }
+                                },
+                                "example" : {
+                                    "nome" :"Luanda"
+                                }
+                            }
+                        }
+                    }
+               },
+               "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a provincia"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "get" : {
+                "tags" : ["Províncias"],
+                "descrption" : "listar todas as provicnias",
+                "summary" : "Rota que lista todas as pprovincias",
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a provincia"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        },
+        "/provinciasFindByName" : {
+            "get" : {
+                "tags" : ["Províncias"],
+                "summary" :"Rota que pega a provincia pelo nome",
+                "parameters" : [{
+                    "in" : "query",
+                    "nome" : "nome",
+                    "type" : "string",
+                    "name":"nome",
+                    "required" : true
+                }],
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a provincia"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        },
+        "/provincias/{id}" : {
+            "get" : {
+                "tags" : ["Províncias"],
+                "summary" :"Rota que pega a provincia pelo id",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "name":"id",
+                    "required" : true
+                }],
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a provincia"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "put" : {
+                "tags" : ["Províncias"],
+                "summary" :"Rota que atualiza a provincia",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "required" : true,
+                    "name" : "id"
+                }],
+               "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "nome" : {
+                                        "typ" : "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+               },
+               "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a provincia"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "delete" : {
+                "tags" : ["Províncias"],
+                "summary" :"Rota que elimina a provincia",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "required" : true,
+                    "name" : "id"
+                }],
+               "responses" : {
+                    "204" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a provincia"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        },
+        "/municipios" : {
+            "post" : {
+                "tags" : ["Municípios"],
+                "description": "criar municipio",
+                "summary" : "Rota que cria a municipio",
+               "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "nome" : {
+                                        "typ" : "string"
+                                    },
+                                    "id_provincia" : {
+                                        "type" : "string"
+                                    }
+                                },
+                                "example" : {
+                                    "nome" :"Luanda",
+                                    "id_provincia" : "fdfgdfd-dfgdf-dfgdfg-dfgdf4"
+                                }
+                            }
+                        }
+                    }
+               },
+               "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a provincia"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "get" : {
+                "tags" : ["Municípios"],
+                "descrption" : "listar todas as provicnias",
+                "summary" : "Rota que lista todas as pprovincias",
+                "parameters" : [
+                    {
+                        "in" : "query",
+                        "id" : "id",
+                        "name" : "id",
+                        "type" : "string"
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a provincia"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        },
+        "/municipiosFindByName" : {
+            "get" : {
+                "tags" : ["Municípios"],
+                "summary" :"Rota que pega a municipio pelo nome",
+                "parameters" : [{
+                    "in" : "query",
+                    "nome" : "nome",
+                    "type" : "string",
+                    "name":"nome",
+                    "required" : true
+                }],
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a provincia"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        },
+        "/municipios/{id}" : {
+            "get" : {
+                "tags" : ["Municípios"],
+                "summary" :"Rota que pega a municipio pelo id",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "name":"id",
+                    "required" : true
+                }],
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao pegar o municipio"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "patch" : {
+                "tags" : ["Municípios"],
+                "summary" :"Rota que atualiza a municipio",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "required" : true,
+                    "name" : "id"
+                }],
+               "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "nome" : {
+                                        "typ" : "string"
+                                    },
+                                    "id_provincia" : {
+                                        "type": "string"
+                                    }
+                                },
+                                "example" : {
+                                    "nome" : "Luanda",
+                                    "id_provincia" : "fdfgdfd-dfgdf-dfgdfg-dfgdf4"
+                                }
+                            }
+                        }
+                    }
+               },
+               "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a provincia"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "delete" : {
+                "tags" : ["Municípios"],
+                "summary" :"Rota que elimina a provincia",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "required" : true,
+                    "name" : "id"
+                }],
+               "responses" : {
+                    "204" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a provincia"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        }
+    }
+}
