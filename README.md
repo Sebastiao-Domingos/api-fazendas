@@ -51,3 +51,8 @@ instalar a tipagem
 para upload de imagens
 ## npm i multer
 ## npm i @types/multer
+
+
+para instalar jwt
+## npm install jsonwebtoken
+### npm install @types/jsonwebtoken -D

@@ -7,6 +7,7 @@ import { municipioRoutes } from "./routes/MunicipioRoute";
 import { proprietarioRoutes } from "./routes/ProprietarioRoute";
 import { fazendasRoutes } from "./routes/FazendaRoute";
 import path from "path";
+import { sessionRoute } from "./routes/SessionRoute";
 
 const app =  express();
 app.use(express.json());
@@ -16,6 +17,7 @@ const __dirname = path.resolve();
 app.use('/api-docs', swaggerUI.serve ,swaggerUI.setup(swaggerDocument))
 app.use("/upload" , express.static(path.join(__dirname,"/","uploads")))
 
+app.use(sessionRoute);
 app.use(administradorRoutes);
 app.use(provinciaRoutes);
 app.use(municipioRoutes);

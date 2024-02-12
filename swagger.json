@@ -16,6 +16,46 @@
         }
     },
     "paths" : {
+        "/session" : {
+            "post" : {
+                "tags" : ["Session"],
+                "description": "fazer login",
+                "summary" : "Rota permite o administrador fazer login",
+               "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "email" : {
+                                        "type" : "string"
+                                    },
+                                    "senha" : {
+                                        "type": "string"
+                                    }
+                                },
+                                "example" : {
+                                    "email" : "seba@gmail.com",
+                                    "senha" : "1234556"
+                                }
+                            }
+                        }
+                    }
+               },
+               "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a administrador"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        }
+        ,
         "/administradores" : {
             "post" : {
                 "tags" : ["Administrador"],

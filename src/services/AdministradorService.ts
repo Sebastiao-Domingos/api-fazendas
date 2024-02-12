@@ -17,11 +17,24 @@ export class AdministradorService implements AdministradorRepository {
             where : {
                 id : admin_id
             },
+            select : {
+                id : true,
+                nome : true,
+                email : true,
+                createAt : true
+            }
         }).then( res => res)
         .catch( error => error);
     };
     async getAll () : Promise<AdministradorData[]>{
-        return await prisma.administrador.findMany()
+        return await prisma.administrador.findMany({
+            select : {
+                email : true, 
+                nome : true,
+                createAt : true,
+                id : true
+            }
+        })
         .then(res => res)
         .catch(error => error)
     };
