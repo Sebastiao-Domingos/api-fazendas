@@ -1,3 +1,6 @@
+import { FazendaResponseData } from "./FazendaRepository"
+import { MunicipioResponseData } from "./localizacao/MunicipioRepository"
+
 export type ProprietarioData = {
     id     :  string  
     nome    : string   
@@ -5,6 +8,11 @@ export type ProprietarioData = {
     distrito : string 
     bairro  : string 
     id_municipio : string
+}
+
+export type ProprietarioDataResponseUnique = ProprietarioData &{
+    municipio : MunicipioResponseData,
+    fazendas : FazendaResponseData[]
 }
 
 export type ProprietarioDataUpdade = {
@@ -33,7 +41,7 @@ export type ProprietarioResponseData = {
 
 export interface ProprietarioRepository {
     add :( data : ProprietarioData )=> Promise<ProprietarioData>,
-    find :(admin_id : string) => Promise<ProprietarioData>,
+    find :(admin_id : string) => Promise<ProprietarioDataResponseUnique>,
     findByName :(searchParams : ProprietarioDataUpdade) => Promise<ProprietarioData[]>,
     get: (pagination: PaginationData) => Promise<ProprietarioResponseData>,
     delete : ( admin_id : string ) => Promise<ProprietarioData>,

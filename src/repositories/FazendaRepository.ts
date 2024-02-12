@@ -1,5 +1,6 @@
 import { municipio, proprietario } from "@prisma/client"
-import { MunicipioResponse } from "./localizacao/MunicipioRepository"
+import { MunicipioResponse, MunicipioResponseData } from "./localizacao/MunicipioRepository"
+import { ProprietarioDataResponseUnique } from "./ProprietarioRepository"
 
 export type FazendaData = {
     id           :   string       
@@ -21,23 +22,35 @@ export type FazendaResponseData ={
     foto         :  File     
     id_municipio :   string 
     id_proprietario: string
-    municipio? : municipio 
-    proprietario? : proprietario
+    municipio? : MunicipioResponseData 
+    proprietario? : ProprietarioDataResponseUnique
 }
-export type fazendaDataUpdate = {
+export type FazendaDataUpdate = {
     codigo?       :   string    
     nome ?        :   string  
     distrito?     :   string
     bairro ?      :   string   
     foto?         :  File     
     id_municipio? :   string ,
-    id_proprietario: string 
+    id_proprietario?: string 
 }  
 
+export type SearchDataFazenda= FazendaDataUpdate & {
+    currentPage? : number,
+    perPage ?: number 
+} 
+
+export type FazendaDataResponse = {
+    fazendas : FazendaData[],
+    currentPage : number,
+    perPage : number,
+    lastPage :number,
+    previousPage : number | null
+}
 export interface FazendaRepository {
     add :( data : FazendaData )=> Promise<FazendaData>,
     find :(fazenda_id : string) => Promise<FazendaResponseData>,
-    get :(searchParams : fazendaDataUpdate) => Promise<FazendaData>,
+    get :(searchParams : SearchDataFazenda) => Promise<FazendaDataResponse>,
     delete : ( fazenda_id : string ) => Promise<FazendaData>,
-    update : (fazenda_id : string, data : fazendaDataUpdate) => Promise<FazendaData>
+    update : (fazenda_id : string, data : FazendaDataUpdate) => Promise<FazendaData>
 }

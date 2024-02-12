@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { PaginationData, ProprietarioData, ProprietarioDataUpdade, ProprietarioRepository, ProprietarioResponseData } from "../repositories/ProprietarioRepository";
+import { PaginationData, ProprietarioData, ProprietarioDataResponseUnique, ProprietarioDataUpdade, ProprietarioRepository, ProprietarioResponseData } from "../repositories/ProprietarioRepository";
 
 
 const prisma = new PrismaClient();
@@ -77,13 +77,26 @@ export class ProprietarioService implements ProprietarioRepository{
             }
         }
     };
-    public async find(id_proprietario: string) : Promise<ProprietarioData>{
+    public async find(id_proprietario: string) : Promise<ProprietarioDataResponseUnique>{
         return await prisma.proprietario.findUnique( {
             where : {
                 id : id_proprietario
             },
             include : {
-                fazenda : true
+                fazenda : {
+                    include : {
+                        municipio : {
+                            include : {
+                                provincia : true
+                            }
+                        }
+                    }
+                },
+                municipio : {
+                    include : {
+                        provincia : true
+                    }
+                }
             }
         }).then( res => res)
         .catch( error=> error);

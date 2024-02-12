@@ -5,7 +5,7 @@ import { administradorRoutes } from "./routes/AdministradorRoute";
 import { provinciaRoutes } from "./routes/ProvinciaRoute";
 import { municipioRoutes } from "./routes/MunicipioRoute";
 import { proprietarioRoutes } from "./routes/ProprietarioRoute";
-
+import { fazendasRoutes } from "./routes/FazendaRoute";
 
 const app =  express();
 app.use(express.json());
@@ -16,6 +16,7 @@ app.use(administradorRoutes);
 app.use(provinciaRoutes);
 app.use(municipioRoutes);
 app.use(proprietarioRoutes)
+app.use(fazendasRoutes)
 
 app.listen(port, () =>{
     console.log(`Esta rodando na porta ${port} !`);
