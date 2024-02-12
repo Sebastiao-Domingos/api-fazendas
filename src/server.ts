@@ -6,12 +6,16 @@ import { provinciaRoutes } from "./routes/ProvinciaRoute";
 import { municipioRoutes } from "./routes/MunicipioRoute";
 import { proprietarioRoutes } from "./routes/ProprietarioRoute";
 import { fazendasRoutes } from "./routes/FazendaRoute";
+import path from "path";
 
 const app =  express();
 app.use(express.json());
 const port = 3333;
+const __dirname = path.resolve();
 
 app.use('/api-docs', swaggerUI.serve ,swaggerUI.setup(swaggerDocument))
+app.use("/upload" , express.static(path.join(__dirname,"/","uploads")))
+
 app.use(administradorRoutes);
 app.use(provinciaRoutes);
 app.use(municipioRoutes);

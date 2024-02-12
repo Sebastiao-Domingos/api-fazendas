@@ -8,7 +8,7 @@ export type FazendaData = {
     nome         :   string  
     distrito     :   string
     bairro       :   string   
-    foto         :  File     
+    fotos         :  Express.Multer.File[]     
     id_municipio :   string 
     id_proprietario: string
 }
@@ -19,7 +19,7 @@ export type FazendaResponseData ={
     nome         :   string  
     distrito     :   string
     bairro       :   string   
-    foto         :  File     
+    fotos         :  {path : string}[]      
     id_municipio :   string 
     id_proprietario: string
     municipio? : MunicipioResponseData 
@@ -30,7 +30,7 @@ export type FazendaDataUpdate = {
     nome ?        :   string  
     distrito?     :   string
     bairro ?      :   string   
-    foto?         :  File     
+    foto?         :  Express.Multer.File[]     
     id_municipio? :   string ,
     id_proprietario?: string 
 }  

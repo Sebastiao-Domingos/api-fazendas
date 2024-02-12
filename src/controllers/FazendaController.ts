@@ -17,8 +17,10 @@ export class FazendaController {
     /**
      * create
      */
-    public async create( request :Request , response :Response) {
+    public async store( request :Request , response :Response) {
         const data : FazendaData = request.body;
+        const files = request.files  as Express.Multer.File[];
+        data.fotos = files;
 
         if(validate(data.id_municipio) && validate(data.id_proprietario)){
             await municipio.find( data.id_municipio)

@@ -739,7 +739,7 @@
                 "summary" : "Rota que cria a fazenda",
                "requestBody" : {
                     "content" : {
-                        "application/json" : {
+                        "multipart/form-data" : {
                             "schema" : {
                                 "type" : "object",
                                 "properties" : {
@@ -747,13 +747,13 @@
                                         "type": "string"
                                     },
                                     "codigo" : {
-                                        "typ" : "string"
+                                        "type" : "string"
                                     },
                                     "nome" : {
-                                        "typ" : "string"
+                                        "type" : "string"
                                     },
-                                    "foto" : {
-                                        "type": "http"
+                                    "imagens" : {
+                                        "type": "file"
                                     },
                                     "id_municipio" : {
                                         "type": "string"

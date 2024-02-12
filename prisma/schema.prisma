@@ -21,7 +21,7 @@ model fazenda {
   nome            String       @db.VarChar(40)
   distrito        String?      @db.VarChar(40)
   bairro          String?      @db.VarChar(40)
-  foto            Bytes        @db.Blob
+  imagens         Imagem[]
   id_proprietario String       @db.VarChar(36)
   id_municipio    String       @db.VarChar(36)
   proprietario    proprietario @relation(fields: [id_proprietario], references: [id], onUpdate: Restrict, map: "fazenda_ibfk_1")
@@ -29,6 +29,13 @@ model fazenda {
 
   @@index([id_municipio], map: "id_municipio")
   @@index([id_proprietario], map: "id_proprietario")
+}
+
+model Imagem {
+  id String @default(uuid()) @db.VarChar(36) @unique
+  path String @db.VarChar(230)
+  fazenda fazenda @relation(fields: [id_fazenda] ,references: [id] )
+  id_fazenda String @db.VarChar(36)
 }
 
 model municipio {

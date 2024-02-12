@@ -1,16 +1,42 @@
 import { PrismaClient } from "@prisma/client";
-import { ProprietarioData, ProprietarioDataUpdade, ProprietarioRepository } from "../repositories/ProprietarioRepository";
-import { FazendaData, FazendaDataResponse, FazendaDataUpdate, FazendaRepository, FazendaResponseData, SearchDataFazenda } from "../repositories/FazendaRepository";
+import { FazendaData, FazendaDataResponse, FazendaRepository, FazendaResponseData, SearchDataFazenda } from "../repositories/FazendaRepository";
 
 
 const prisma = new PrismaClient();
 
 
-
 export class FazendaService implements FazendaRepository{
-    public async add (data: any) :Promise<FazendaData>{
-        return await prisma.fazenda.create( { 
-            data : data
+
+    public async add (data: FazendaData) :Promise<FazendaData>{
+        const { id,fotos , nome ,codigo ,bairro ,distrito,id_municipio ,id_proprietario} = data;
+        
+        const images = fotos.map( imagem => {
+            return {
+                path : imagem.filename,
+            }
+        })
+
+        return await prisma.fazenda.create({ 
+            data :{
+                id,
+                nome,
+                codigo,
+                id_proprietario,
+                id_municipio,
+                distrito,
+                bairro,
+                imagens : {
+                    create : images
+                }
+            },
+            include : {
+                imagens : {
+                    select : {
+                        path : true
+                    }
+                }
+            }
+            
         })
         .then( response => response)
         .catch( error => error);
@@ -55,6 +81,13 @@ export class FazendaService implements FazendaRepository{
                     distrito : searchParams.distrito,
                     id_municipio : searchParams.id_municipio,
                     id_proprietario : searchParams.id_proprietario
+                },
+                include:{
+                    imagens :{
+                        select :{
+                            path :true
+                        }
+                    }
                 }
             }).then( response => {
                 return {
@@ -62,7 +95,8 @@ export class FazendaService implements FazendaRepository{
                     currentPage: searchParams.currentPage,
                     perPage: searchParams.perPage,
                     lastPage: lastPage,
-                    previousPage: previousPage
+                    previousPage: previousPage,
+                    total : counterFazenda
                 }
             })
             .catch( error => error);
@@ -97,5 +131,4 @@ export class FazendaService implements FazendaRepository{
         }).then( response => response)
         .catch( error => error);
     };
-
 }
