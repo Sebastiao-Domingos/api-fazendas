@@ -731,6 +731,230 @@
                     }
                }
             }
+        },
+        "/fazendas" : {
+            "post" : {
+                "tags" : ["Fazendas"],
+                "description": "criar fazenda",
+                "summary" : "Rota que cria a fazenda",
+               "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "id_proprietario" : {
+                                        "type": "string"
+                                    },
+                                    "codigo" : {
+                                        "typ" : "string"
+                                    },
+                                    "nome" : {
+                                        "typ" : "string"
+                                    },
+                                    "foto" : {
+                                        "type": "http"
+                                    },
+                                    "id_municipio" : {
+                                        "type": "string"
+                                    },
+                                    "distrito" : {
+                                        "type": "string"
+                                    },
+                                    "bairro" : {
+                                        "type": "string"
+                                    }
+                                   
+                                },
+                                "example" : {
+                                    "id_proprietario" : "werwer-werwer-wewrerw-qweqwe",
+                                    "codigo" :"FAZ-01212",
+                                    "nome" :"FazCastro",
+                                    "foto" : "http://localhost:343",
+                                    "id_municipio" : "werwer-werwer-wewrerw-qweqwe",
+                                    "distrito" : "Rangel",
+                                    "bairro" : "Dona Malha"
+                                }
+                            }
+                        }
+                    }
+               },
+               "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a fazenda"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "get" : {
+                "tags" : ["Fazendas"],
+                "descrption" : "listar todas as fazendas",
+                "summary" : "Rota que lista todas as fazendas",
+                "parameters" : [
+                    {
+                        "in" : "query",
+                        "distrito" : "distrito",
+                        "type" : "string",
+                        "name":"distrito"
+                    },
+                    {
+                        "in" : "query",
+                        "bairro" : "bairro",
+                        "type" : "string",
+                        "name":"bairro"
+                    },
+                    {
+                        "in" : "query",
+                        "id_municipio" : "id_municipio",
+                        "type" : "string",
+                        "name":"id_municipio"
+                    },
+                    {
+                        "in" : "query",
+                        "id_proprietario" : "id_proprietario",
+                        "type" : "string",
+                        "name":"id_proprietario"
+                    },
+                    {
+                        "in" : "query",
+                        "currentPage" : "currentPage",
+                        "type" : "number",
+                        "name":"currentPage"
+                    },
+                    {
+                        "in" : "query",
+                        "perPage" : "perPage",
+                        "type" : "number",
+                        "name":"perPage"
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao criar a fazenda"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        },
+        "/fazendas/{id}" : {
+            "get" : {
+                "tags" : ["Fazendas"],
+                "summary" :"Rota que pega a fazenda pelo id",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "name":"id",
+                    "required" : true
+                }],
+                "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao pegar o fazenda"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "put" : {
+                "tags" : ["Fazendas"],
+                "summary" :"Rota que atualiza a fazenda",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "required" : true,
+                    "name" : "id"
+                }],
+               "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "id_proprietario" : {
+                                        "type": "string"
+                                    },
+                                    "codigo" : {
+                                        "typ" : "string"
+                                    },
+                                    "nome" : {
+                                        "typ" : "string"
+                                    },
+                                    "foto" : {
+                                        "type": "http"
+                                    },
+                                    "id_municipio" : {
+                                        "type": "string"
+                                    },
+                                    "distrito" : {
+                                        "type": "string"
+                                    },
+                                    "bairro" : {
+                                        "type": "string"
+                                    }
+                                   
+                                },
+                                "example" : {
+                                    "id_proprietario" : "werwer-werwer-wewrerw-qweqwe",
+                                    "codigo" :"FAZ-01212",
+                                    "nome" :"FazCastro",
+                                    "foto" : "http://localhost:343",
+                                    "id_municipio" : "werwer-werwer-wewrerw-qweqwe",
+                                    "distrito" : "Rangel",
+                                    "bairro" : "Dona Malha"
+                                }
+                            }
+                        }
+                    }
+               },
+               "responses" : {
+                    "200" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao atualizar a fazenda"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            },
+            "delete" : {
+                "tags" : ["Fazendas"],
+                "summary" :"Rota que elimina a fazenda",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "required" : true,
+                    "name" : "id"
+                }],
+               "responses" : {
+                    "204" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao eliminar a fazenda"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
         }
     }
 }
