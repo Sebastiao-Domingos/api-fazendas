@@ -45,3 +45,9 @@ instalar o swagger-ui-express
 
 instalar a tipagem 
 ## npm i @types/swagger-ui-express
+
+
+
+para upload de imagens
+## npm i multer
+## npm i @types/multer

@@ -1,73 +1,134 @@
 import { PrismaClient } from "@prisma/client";
-import { ProprietarioData, ProprietarioDataUpdade, ProprietarioRepository } from "../repositories/ProprietarioRepository";
+import { FazendaData, FazendaDataResponse, FazendaRepository, FazendaResponseData, SearchDataFazenda } from "../repositories/FazendaRepository";
 
 
 const prisma = new PrismaClient();
 
 
+export class FazendaService implements FazendaRepository{
 
-export class ProprietarioService implements ProprietarioRepository{
-
-    public async add(data: ProprietarioData): Promise<ProprietarioData>{
-
-        return await prisma.proprietario.create( {
-            data : data
-        }).then( res => res)
-        .catch( error => error);
-    };
-
-    public async update( id_proprietario : string, data: ProprietarioDataUpdade) : Promise<ProprietarioData>{
-        return await prisma.proprietario.update({
-            data :data,
-            where : {
-                id : id_proprietario
-            }
-        }).then( res => res)
-        .catch( error => error)
-    };
-
-    public async findByName( searchParams : ProprietarioDataUpdade):Promise<ProprietarioData[]>{
+    public async add (data: FazendaData) :Promise<FazendaData>{
+        const { id,fotos , nome ,codigo ,bairro ,distrito,id_municipio ,id_proprietario} = data;
         
-        return await prisma.proprietario.findMany( {
-            where : {
-                nome : searchParams.nome,
-                nif :searchParams.nif,
-                bairro : searchParams.bairro,
-                distrito : searchParams.distrito
-            },
-            include : {
-                fazenda : true
+        const images = fotos.map( imagem => {
+            return {
+                path : imagem.filename,
             }
-        }).then( res => res)
-        .catch( error => error);
-    };
-
-    public async get() : Promise<ProprietarioData[]>{
-        return await prisma.proprietario.findMany({
-            skip : 1 ,
-            take : 20
         })
-        .then( res => res)
-        .catch( error => error);
-    };
-    public async find(id_proprietario: string) : Promise<ProprietarioData>{
-        return await prisma.proprietario.findUnique( {
-            where : {
-                id : id_proprietario
+
+        return await prisma.fazenda.create({ 
+            data :{
+                id,
+                nome,
+                codigo,
+                id_proprietario,
+                id_municipio,
+                distrito,
+                bairro,
+                imagens : {
+                    create : images
+                }
             },
             include : {
-                fazenda : true
+                imagens : {
+                    select : {
+                        path : true
+                    }
+                }
             }
-        }).then( res => res)
-        .catch( error=> error);
+            
+        })
+        .then( response => response)
+        .catch( error => error);
+    };
+    public async find (fazenda_id: string): Promise<FazendaResponseData>{
+        return await prisma.fazenda.findUnique({
+            where : {
+                id : fazenda_id
+            },
+            include : {
+                municipio : {
+                    include : {
+                        provincia : true
+                    }
+                },
+                proprietario : {
+                    include : {
+                        municipio : {
+                            include : {
+                                provincia : true
+                            }
+                        }
+                    }
+                }
+            }
+        }).then( response => response)
+        .catch( error => error);
     };
 
-    public async delete(id_proprietario: string) : Promise<ProprietarioData>{
-        return await prisma.proprietario.delete( {
-            where : {
-                id : id_proprietario
+    public async get (searchParams: SearchDataFazenda) : Promise<FazendaDataResponse>{
+        const counterFazenda = await prisma.fazenda.count();
+        if(counterFazenda){
+            const lastPage = Math.ceil( counterFazenda/searchParams.perPage!);
+            const jump = (searchParams.currentPage! -1)*searchParams.perPage!;
+            const previousPage = (searchParams.currentPage!-1 >=1) ? searchParams.currentPage!-1 : null;
+
+            return await prisma.fazenda.findMany({
+                skip : jump,
+                take : searchParams.perPage!,
+                where : {
+                    bairro : searchParams.bairro,
+                    distrito : searchParams.distrito,
+                    id_municipio : searchParams.id_municipio,
+                    id_proprietario : searchParams.id_proprietario
+                },
+                include:{
+                    imagens :{
+                        select :{
+                            path :true
+                        }
+                    }
+                }
+            }).then( response => {
+                return {
+                    fazendas: response,
+                    currentPage: searchParams.currentPage,
+                    perPage: searchParams.perPage,
+                    lastPage: lastPage,
+                    previousPage: previousPage,
+                    total : counterFazenda
+                }
+            })
+            .catch( error => error);
+            
+        }else {
+            return {
+                fazendas: [],
+                currentPage: 0,
+                perPage: 0,
+                lastPage: 0,
+                previousPage:null
             }
-        }).then( res => res)
-        .catch( error => error)
+        }
+    };
+    public async delete (fazenda_id: string) : Promise<FazendaData>{
+        return await prisma.fazenda.delete( {
+            where : {
+                id : fazenda_id
+            }
+        })
+        .then ( response => response)
+        .catch( error => error);
+    };
+
+    public async update (fazenda_id: string, data: any): Promise<FazendaData>{
+
+        return await prisma.fazenda.update( {
+            data : data,
+            where : {
+                id : fazenda_id
+            }
+        }).then( response => response)
+        .catch( error => error);
     };
 }
