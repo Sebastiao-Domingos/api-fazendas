@@ -3,14 +3,23 @@ import { AdministradorData, AdministradorDataUpdade } from "../repositories/Admi
 import { AdministradorService } from "../services/AdministradorService";
 import { Request, Response } from 'express';
 import { PrismaClient } from "@prisma/client";
-import { BadRequestError } from "../helpers/api-errors";
+import { BadRequestError, UnauthorizedError } from "../helpers/api-errors";
 import bcrypt from "bcrypt";
-
+import jwt from "jsonwebtoken"
+import { SECRET } from "./auth/Session";
+import { PayLoadType } from "../repositories/SessionRepository";
 
 const service = new AdministradorService();
 const prisma = new PrismaClient();
 
 export class AdministradorController{
+
+    /**
+     * getProfile
+     */
+    public async getProfile( request : Request ,response : Response) {
+        response.status(200).json( request.user)
+    }
 
     /**
      * create
@@ -27,7 +36,8 @@ export class AdministradorController{
         if( !verifyAdmin ){
             const hashPass = await bcrypt.hash( data.senha ,10 );
             data.senha = hashPass;
-            await service.add( data).then( res => {
+            
+            await service.add( data ).then( res => {
                 return response.status(201).json(res);
             })
             .catch( error => {

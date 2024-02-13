@@ -17,6 +17,11 @@ export type SessionDataService = {
     status : "email" | "password" | "okay"
 }
 
+export type PayLoadType = {
+    id : string,
+    nome : string,
+    email : string
+}
 export interface SessionRepository {
     login :( data : SessionData )=> Promise<SessionDataService>,
     logout :() => void,

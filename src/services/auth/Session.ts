@@ -1,27 +1,28 @@
 import { PrismaClient } from "@prisma/client";
 import { SessionData,  SessionDataService, SessionRepository } from "../../repositories/SessionRepository";
-
+import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 export class SessionService implements SessionRepository{
     public async login (data: SessionData): Promise<SessionDataService>{
-        const { email} = data;
+        const { email ,senha} = data;
         
-        if( await validatorEmail(email)){
+        const user = await validatorEmail(email)
+        if( !user ){
             return {
                 user:  null,
                 status: "email"
             }
         }
-        const dataUser =  await validatorUser(data);
 
-        if( !dataUser){
+        const verifyPass = await bcrypt.compare(senha , user.senha )
+        if( !verifyPass){
             return {
                 user:  null,
                 status: "password"
             }
         }else {
             return {
-                user:  dataUser,
+                user:  user,
                 status: "okay"
             }
         }
@@ -37,8 +38,8 @@ async function validatorEmail( email :string){
     const user = await prisma.administrador.findUnique({
         where : {email}
     }) 
-    if(!user) return true;
-    return false;
+
+    return user;
 }
 
 async function validatorUser( user : SessionData){

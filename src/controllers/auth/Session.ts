@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken"
 import { SessionService } from "../../services/auth/Session";
 
 const service = new SessionService();
-const SECRET = "sebaABCDFGsebaZXCVC"
+export const SECRET = "sebaABCDFGsebaZXCVC"
 export class SessionController {
     /**
      * login
@@ -25,12 +25,13 @@ export class SessionController {
         if( user.status === "okay"){
             const token = jwt.sign( 
                 { 
+                    id : user.user?.id,
                     nome : user.user?.nome,
                     email : user.user?.email
                 },
                 SECRET ,
                 {
-                    expiresIn : "1d"
+                    expiresIn : 60*60
                 }
             )
             response.status(200).json({
