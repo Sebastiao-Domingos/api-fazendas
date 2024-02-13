@@ -96,6 +96,7 @@ export class FazendaService implements FazendaRepository{
                     perPage: searchParams.perPage,
                     lastPage: lastPage,
                     previousPage: previousPage,
+                    partialTotal : response.length,
                     total : counterFazenda
                 }
             })
@@ -122,11 +123,17 @@ export class FazendaService implements FazendaRepository{
     };
 
     public async update (fazenda_id: string, data: any): Promise<FazendaData>{
-
         return await prisma.fazenda.update( {
             data : data,
             where : {
                 id : fazenda_id
+            },
+            include:{
+                imagens : {
+                    select : {
+                        path : true
+                    }
+                }
             }
         }).then( response => response)
         .catch( error => error);

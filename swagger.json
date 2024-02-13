@@ -784,25 +784,32 @@
                                 "type" : "object",
                                 "properties" : {
                                     "id_proprietario" : {
-                                        "type": "string"
+                                        "type": "string",
+                                        "required" : true
                                     },
                                     "codigo" : {
-                                        "type" : "string"
+                                        "type" : "string",
+                                        "required" : true
                                     },
                                     "nome" : {
-                                        "type" : "string"
+                                        "type" : "string",
+                                        "required" : true
                                     },
                                     "imagens" : {
-                                        "type": "file"
+                                        "type": "file" ,
+                                        "required" : true
                                     },
                                     "id_municipio" : {
-                                        "type": "string"
+                                        "type": "string",
+                                        "required" : true
                                     },
                                     "distrito" : {
-                                        "type": "string"
+                                        "type": "string",
+                                        "required" : true
                                     },
                                     "bairro" : {
-                                        "type": "string"
+                                        "type": "string",
+                                        "required" : true
                                     }
                                    
                                 },
@@ -921,7 +928,7 @@
                 }],
                "requestBody" : {
                     "content" : {
-                        "application/json" : {
+                        "multipart/form-data" : {
                             "schema" : {
                                 "type" : "object",
                                 "properties" : {
@@ -929,13 +936,13 @@
                                         "type": "string"
                                     },
                                     "codigo" : {
-                                        "typ" : "string"
+                                        "type" : "string"
                                     },
                                     "nome" : {
-                                        "typ" : "string"
+                                        "type" : "string"
                                     },
-                                    "foto" : {
-                                        "type": "http"
+                                    "imagens" : {
+                                        "type": "file"
                                     },
                                     "id_municipio" : {
                                         "type": "string"

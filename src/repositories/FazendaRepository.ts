@@ -30,7 +30,7 @@ export type FazendaDataUpdate = {
     nome ?        :   string  
     distrito?     :   string
     bairro ?      :   string   
-    foto?         :  Express.Multer.File[]     
+    fotos?         :  Express.Multer.File[]     
     id_municipio? :   string ,
     id_proprietario?: string 
 }  
