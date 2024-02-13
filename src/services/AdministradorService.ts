@@ -8,6 +8,12 @@ export class AdministradorService implements AdministradorRepository {
     async add (data: AdministradorData):Promise<AdministradorData>{
         return await prisma.administrador.create({
             data : data,
+            select : {
+                id : true,
+                nome : true,
+                email : true,
+                createAt : true
+            }
         }).then( res => res)
         .catch( error => error)
     };
@@ -29,10 +35,13 @@ export class AdministradorService implements AdministradorRepository {
     async getAll () : Promise<AdministradorData[]>{
         return await prisma.administrador.findMany({
             select : {
+                id : true,
                 email : true, 
                 nome : true,
-                createAt : true,
-                id : true
+                createAt : true
+            },
+            orderBy : {
+                createAt : "asc"
             }
         })
         .then(res => res)

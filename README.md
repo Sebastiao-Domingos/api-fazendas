@@ -47,7 +47,6 @@ instalar a tipagem
 ## npm i @types/swagger-ui-express
 
 
-
 para upload de imagens
 ## npm i multer
 ## npm i @types/multer
@@ -56,3 +55,7 @@ para upload de imagens
 para instalar jwt
 ## npm install jsonwebtoken
 ### npm install @types/jsonwebtoken -D
+
+para criptografar a passe word
+## npm install bcrypt
+## npm install @types/bcrypt

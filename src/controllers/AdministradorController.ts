@@ -2,23 +2,40 @@ import { validate } from "uuid";
 import { AdministradorData, AdministradorDataUpdade } from "../repositories/AdministradorRepository";
 import { AdministradorService } from "../services/AdministradorService";
 import { Request, Response } from 'express';
-
+import { PrismaClient } from "@prisma/client";
+import { BadRequestError } from "../helpers/api-errors";
+import bcrypt from "bcrypt";
 
 
 const service = new AdministradorService();
+const prisma = new PrismaClient();
+
 export class AdministradorController{
 
     /**
      * create
      */
     public async create( request : Request , response : Response ) {
-        const data :any = request.body;
-        await service.add( data).then( res => {
-            return response.status(201).json(res);
+        const data :AdministradorData = request.body;
+
+        const verifyAdmin = await prisma.administrador.findUnique({
+            where : {
+                email : data.email
+            }
         })
-        .catch( error => {
-            return response.status(400).json(error)
-        })
+
+        if( !verifyAdmin ){
+            const hashPass = await bcrypt.hash( data.senha ,10 );
+            data.senha = hashPass;
+            await service.add( data).then( res => {
+                return response.status(201).json(res);
+            })
+            .catch( error => {
+                return response.status(400).json(error)
+            })
+        }else {
+            return response.status(400).json( new BadRequestError("Ja existe administrar com este email!"))
+        }
     }
 
     /**

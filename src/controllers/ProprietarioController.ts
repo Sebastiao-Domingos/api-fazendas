@@ -4,6 +4,7 @@ import { ProprietarioService } from "../services/ProprietarioService";
 import { PaginationData, ProprietarioData, ProprietarioDataUpdade } from "../repositories/ProprietarioRepository";
 import { MunicipioService } from "../services/localizacao/MunicipioService";
 import { PrismaClient } from "@prisma/client";
+import { BadRequestError } from "../helpers/api-errors";
 
 const service = new ProprietarioService();
 const municipio = new  MunicipioService();
@@ -21,8 +22,6 @@ export class ProprietarioController {
                 if(res){
                     await service.findByName({nif : data.nif , nome : data.nome})
                     .then( async(respon) => {
-                        console.log(respon);
-                        
                         if(!respon.length){
                             return await service.add( data).then( res => {
                                 response.status(201).json(res);
@@ -31,21 +30,21 @@ export class ProprietarioController {
                                 response.status(401).json(error);
                             })
                         }else{
-                            return response.status(400).json( {sms : "ja existe proprietario com este nome ou nif"})
+                            return response.status(400).json( new BadRequestError("ja existe proprietario com este nome ou nif"))
                         }
                     })
                     .catch( () =>{
-                        return response.status(400).json( {sms : "erro ao validar o nome e nif"})
+                        return response.status(400).json( new BadRequestError("erro ao validar o nome e nif"))
                     })
                 }else {
-                    return response.status(400).json( {sms : "id do municipio não encontrada!"})
+                    return response.status(400).json( new BadRequestError("id do municipio não encontrada!"))
                 }
             })
             .catch( error => {
-                return response.status(400).json( {sms : "Erro a procurar o municipio"})
+                return response.status(400).json( new BadRequestError("Erro a procurar o municipio"))
             })
         }else {
-            return response.status(400).json( {sms : "id do municipio inválido!"})
+            return response.status(400).json(new BadRequestError("id do municipio inválido!"))
         }
     }
 
