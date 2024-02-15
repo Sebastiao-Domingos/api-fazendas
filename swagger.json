@@ -13,6 +13,11 @@
                 "scheme" : "bearer",
                 "bearerFormat" : "JWT"
             }
+        },
+        "responses" : {
+            "UnauthorizedError":{
+                "description": "Access token is missing or invalid"
+            }
         }
     },
     "paths" : {
@@ -61,6 +66,9 @@
                 "tags" : ["Administrador"],
                 "description": "criar administrador",
                 "summary" : "Rota que cria a administrador",
+                "security":{
+                    "bearerAuth" :[]
+                },
                "requestBody" : {
                     "content" : {
                         "application/json" : {
@@ -94,7 +102,7 @@
                         "description" : "Erro ao criar a administrador"
                     },
                     "401" : {
-                        "description" : "Unauthorized"
+                        "$ref": "#/components/responses/UnauthorizedError"
                     }
                }
             },
@@ -102,6 +110,9 @@
                 "tags" : ["Administrador"],
                 "descrption" : "listar todas as administradores",
                 "summary" : "Rota que lista todas as administradores",
+                "security":{
+                    "bearerAuth" :["bearer"]
+                },
                 "responses" : {
                     "200" : {
                         "description" : "okay"
@@ -916,9 +927,34 @@
                     }
                }
             },
+            "delete" : {
+                "tags" : ["Fazendas"],
+                "summary" :"Rota que elimina a fazenda",
+                "parameters" : [{
+                    "in" : "path",
+                    "id" : "id",
+                    "type" : "string",
+                    "required" : true,
+                    "name" : "id"
+                }],
+               "responses" : {
+                    "204" : {
+                        "description" : "okay"
+                    },
+                    "400" : {
+                        "description" : "Erro ao eliminar a fazenda"
+                    },
+                    "401" : {
+                        "description" : "Unauthorized"
+                    }
+               }
+            }
+        },
+        "/fazendas/dados/{id}" :{
             "put" : {
                 "tags" : ["Fazendas"],
-                "summary" :"Rota que atualiza a fazenda",
+                "description" : "Rota que atualiza os dados da fazenda",
+                "summary" :"Rota que atualiza os dados da fazenda",
                 "parameters" : [{
                     "in" : "path",
                     "id" : "id",
@@ -928,7 +964,7 @@
                 }],
                "requestBody" : {
                     "content" : {
-                        "multipart/form-data" : {
+                        "application/json" : {
                             "schema" : {
                                 "type" : "object",
                                 "properties" : {
@@ -941,9 +977,6 @@
                                     "nome" : {
                                         "type" : "string"
                                     },
-                                    "imagens" : {
-                                        "type": "file"
-                                    },
                                     "id_municipio" : {
                                         "type": "string"
                                     },
@@ -953,13 +986,11 @@
                                     "bairro" : {
                                         "type": "string"
                                     }
-                                   
                                 },
                                 "example" : {
                                     "id_proprietario" : "werwer-werwer-wewrerw-qweqwe",
                                     "codigo" :"FAZ-01212",
                                     "nome" :"FazCastro",
-                                    "foto" : "http://localhost:343",
                                     "id_municipio" : "werwer-werwer-wewrerw-qweqwe",
                                     "distrito" : "Rangel",
                                     "bairro" : "Dona Malha"
@@ -979,10 +1010,13 @@
                         "description" : "Unauthorized"
                     }
                }
-            },
-            "delete" : {
+            }
+        },
+        "/fazendas/imagem/{id}" :{
+            "put" : {
                 "tags" : ["Fazendas"],
-                "summary" :"Rota que elimina a fazenda",
+                "description" : "Rota que atualiza as imagens da fazenda",
+                "summary" :"Rota que atualiza as imagens da fazenda",
                 "parameters" : [{
                     "in" : "path",
                     "id" : "id",
@@ -990,12 +1024,34 @@
                     "required" : true,
                     "name" : "id"
                 }],
+               "requestBody" : {
+                    "content" : {
+                        "multipart/form-data" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "imagem" : {
+                                        "type" : "file"
+                                    }
+                                },
+                                "example" : {
+                                    "id_proprietario" : "werwer-werwer-wewrerw-qweqwe",
+                                    "codigo" :"FAZ-01212",
+                                    "nome" :"FazCastro",
+                                    "id_municipio" : "werwer-werwer-wewrerw-qweqwe",
+                                    "distrito" : "Rangel",
+                                    "bairro" : "Dona Malha"
+                                }
+                            }
+                        }
+                    }
+               },
                "responses" : {
-                    "204" : {
+                    "200" : {
                         "description" : "okay"
                     },
                     "400" : {
-                        "description" : "Erro ao eliminar a fazenda"
+                        "description" : "Erro ao atualizar a fazenda"
                     },
                     "401" : {
                         "description" : "Unauthorized"

@@ -29,8 +29,7 @@ export type FazendaDataUpdate = {
     codigo?       :   string    
     nome ?        :   string  
     distrito?     :   string
-    bairro ?      :   string   
-    fotos?         :  Express.Multer.File[]     
+    bairro ?      :   string       
     id_municipio? :   string ,
     id_proprietario?: string 
 }  
@@ -47,10 +46,16 @@ export type FazendaDataResponse = {
     lastPage :number,
     previousPage : number | null
 }
+
+export type DataUpdateImage ={
+    path? : string
+}
+
 export interface FazendaRepository {
     add :( data : FazendaData )=> Promise<FazendaData>,
     find :(fazenda_id : string) => Promise<FazendaResponseData>,
     get :(searchParams : SearchDataFazenda) => Promise<FazendaDataResponse>,
     delete : ( fazenda_id : string ) => Promise<FazendaData>,
     update : (fazenda_id : string, data : FazendaDataUpdate) => Promise<FazendaData>
+    updateImage : (image_id : string, data : DataUpdateImage ) => Promise<FazendaData>
 }

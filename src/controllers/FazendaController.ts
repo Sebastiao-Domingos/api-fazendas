@@ -55,13 +55,10 @@ export class FazendaController {
     /**
      * updade
      */
-    public async updade( request : Request ,response :Response) {
+    public async update( request : Request ,response :Response) {
         const data:FazendaDataUpdate = request.body;
-        const files = request.files  as Express.Multer.File[];
         const id = request.params.id!;
-        if( files ){
-            data.fotos = files;
-        }
+   
         if(validate(id)){
             await service.find(id)
             .then( async( res) => {
@@ -146,6 +143,35 @@ export class FazendaController {
             })
         }else{
             response.status(400).json(new BadRequestError("id dafazenda inválido!"))
+        }
+    }
+
+    /**
+     * updateImage
+     */
+    public async updateImage( request : Request , response : Response) {
+        const id : string = request.params.id;
+        const file = request.file as Express.Multer.File;
+        
+        if(validate(id)){
+            await prisma.imagem.findUnique( { where :{ id }})
+            .then( async (resImage) => {
+                if(!resImage){
+                    return response.status(404).json( new NotFoundError("Imagem não encontrada!"))
+                }else {
+                    await service.updateImage( id,{path : file.filename})
+                    .then( res => {
+                        response.status(200).json(res);
+                    })
+                    .catch( () => {
+                        response.status(401).json( new NotFoundError("Erro ao atualizar!"))
+                    })
+                }
+            }).catch( error => {
+                return response.status(400).json(error)
+            })
+        }else {
+            return response.status(400).json( new BadRequestError("Id inválido!"))
         }
     }
     /**

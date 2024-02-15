@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { FazendaData, FazendaDataResponse, FazendaRepository, FazendaResponseData, SearchDataFazenda } from "../repositories/FazendaRepository";
+import { DataUpdateImage, FazendaData, FazendaDataResponse, FazendaRepository, FazendaResponseData, SearchDataFazenda } from "../repositories/FazendaRepository";
 
 
 const prisma = new PrismaClient();
@@ -83,11 +83,7 @@ export class FazendaService implements FazendaRepository{
                     id_proprietario : searchParams.id_proprietario
                 },
                 include:{
-                    imagens :{
-                        select :{
-                            path :true
-                        }
-                    }
+                    imagens : true
                 }
             }).then( response => {
                 return {
@@ -105,8 +101,8 @@ export class FazendaService implements FazendaRepository{
         }else {
             return {
                 fazendas: [],
-                currentPage: 0,
                 perPage: 0,
+                currentPage: 0,
                 lastPage: 0,
                 previousPage:null
             }
@@ -129,13 +125,20 @@ export class FazendaService implements FazendaRepository{
                 id : fazenda_id
             },
             include:{
-                imagens : {
-                    select : {
-                        path : true
-                    }
-                }
+                imagens : true
             }
         }).then( response => response)
+        .catch( error => error);
+    };
+
+    public async updateImage(image_id: string, data: DataUpdateImage) : Promise<FazendaData>{
+        
+        return await prisma.imagem.update( {
+            data : data,
+            where :{
+                id : image_id
+            }
+        }).then( response  => response)
         .catch( error => error);
     };
 }

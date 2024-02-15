@@ -11,9 +11,8 @@ const BASE_PATH = "/fazendas";
 fazendasRoutes.post(BASE_PATH , upload.array("imagens"),controller.store);
 fazendasRoutes.get( `${BASE_PATH}` , controller.get);
 fazendasRoutes.get(`${BASE_PATH}/:id`, controller.find);
-// provinciaRoutes.get(`/provinciasFindByName`, controller.findByName);
-fazendasRoutes.put(`${BASE_PATH}/:id`, controller.updade);
+fazendasRoutes.put(`${BASE_PATH}/dados/:id`, controller.update);
+fazendasRoutes.put(`${BASE_PATH}/imagem/:id`,upload.single("imagem"), controller.updateImage);
 fazendasRoutes.delete(`${BASE_PATH}/:id`,controller.delete);
-
 
 export {fazendasRoutes}

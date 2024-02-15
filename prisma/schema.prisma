@@ -24,6 +24,7 @@ model fazenda {
   imagens         Imagem[]
   id_proprietario String       @db.VarChar(36)
   id_municipio    String       @db.VarChar(36)
+  createAt DateTime @default(now())
   proprietario    proprietario @relation(fields: [id_proprietario], references: [id], onUpdate: Restrict, map: "fazenda_ibfk_1")
   municipio       municipio    @relation(fields: [id_municipio], references: [id], onUpdate: Restrict, map: "fazenda_ibfk_2")
 
@@ -36,6 +37,7 @@ model Imagem {
   path String @db.VarChar(230)
   fazenda fazenda @relation(fields: [id_fazenda] ,references: [id] )
   id_fazenda String @db.VarChar(36)
+  createAt DateTime @default(now())
 }
 
 model municipio {
@@ -45,6 +47,7 @@ model municipio {
   fazenda      fazenda[]
   proprietario proprietario[]
   provincia    provincia @relation(fields: [id_provincia], references: [id], onUpdate: Restrict, map: "municipio_ibfk_1")
+  createAt DateTime @default(now())
 
   @@index([id_provincia], map: "id_provincia")
 }
@@ -58,10 +61,13 @@ model proprietario {
   id_municipio String    @db.VarChar(36)
   municipio    municipio @relation(fields: [id_municipio], references: [id], onUpdate: Restrict, map: "municipio_ibfk_2")
   fazenda  fazenda[]
+  createAt DateTime @default(now())
+
 }
 
 model provincia {
   id        String      @id @default(uuid()) @db.VarChar(36)
   nome      String      @unique(map: "nome") @db.VarChar(30)
   municipio municipio[]
+  createAt DateTime @default(now())
 }

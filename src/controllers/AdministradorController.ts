@@ -3,11 +3,8 @@ import { AdministradorData, AdministradorDataUpdade } from "../repositories/Admi
 import { AdministradorService } from "../services/AdministradorService";
 import { Request, Response } from 'express';
 import { PrismaClient } from "@prisma/client";
-import { BadRequestError, UnauthorizedError } from "../helpers/api-errors";
+import { BadRequestError } from "../helpers/api-errors";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken"
-import { SECRET } from "./auth/Session";
-import { PayLoadType } from "../repositories/SessionRepository";
 
 const service = new AdministradorService();
 const prisma = new PrismaClient();
