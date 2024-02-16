@@ -21,8 +21,9 @@ export class SessionService implements SessionRepository{
                 status: "password"
             }
         }else {
+            const {senha:_ , ...filteredUser} = user;
             return {
-                user:  user,
+                user:  filteredUser,
                 status: "okay"
             }
         }
@@ -40,18 +41,4 @@ async function validatorEmail( email :string){
     }) 
 
     return user;
-}
-
-async function validatorUser( user : SessionData){
-    const userFound = await prisma.administrador.findUnique({
-        where : {
-            email : user.email,
-            senha : user.senha
-        },
-        select : {
-            nome : true,
-            email :true
-        }
-    }) 
-    return userFound;
 }

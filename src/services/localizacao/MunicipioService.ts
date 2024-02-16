@@ -34,7 +34,16 @@ export class MunicipioService implements MunicipioRepository{
     };
     public async find(id_munnicipio :string) : Promise<MunicipioResponseData>{
 
-        return await prisma.municipio.findUnique({ where : { id : id_munnicipio} , include : {provincia : true}})
+        return await prisma.municipio.findUnique({ 
+            where : { id : id_munnicipio} , 
+            include : {
+                provincia : {
+                    include : {
+                        municipio : true
+                    }
+                }
+            }
+        })
         .then( res => res)
         .catch( error => error);
     };
