@@ -72,7 +72,7 @@ export class FazendaService implements FazendaRepository{
             const lastPage = Math.ceil( counterFazenda/searchParams.perPage!);
             const jump = (searchParams.currentPage! -1)*searchParams.perPage!;
             const previousPage = (searchParams.currentPage!-1 >=1) ? searchParams.currentPage!-1 : null;
-
+            const nextPage = (searchParams.currentPage!+1 <= lastPage) ? searchParams.currentPage!+1 : null;
             return await prisma.fazenda.findMany({
                 skip : jump,
                 take : searchParams.perPage!,
@@ -88,8 +88,9 @@ export class FazendaService implements FazendaRepository{
             }).then( response => {
                 return {
                     fazendas: response,
-                    currentPage: searchParams.currentPage,
                     perPage: searchParams.perPage,
+                    currentPage: searchParams.currentPage,
+                    nextPage :nextPage,
                     lastPage: lastPage,
                     previousPage: previousPage,
                     partialTotal : response.length,
@@ -103,6 +104,7 @@ export class FazendaService implements FazendaRepository{
                 fazendas: [],
                 perPage: 0,
                 currentPage: 0,
+                nextPage : null,
                 lastPage: 0,
                 previousPage:null
             }

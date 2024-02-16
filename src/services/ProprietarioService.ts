@@ -50,7 +50,7 @@ export class ProprietarioService implements ProprietarioRepository{
             pagination.lasPage = Math.ceil(countElements/pagination.perPage!)
             const previous = (pagination.currentPage!-1) >= 1 ? pagination.currentPage!-1 : null; 
             const jump  : number = pagination.currentPage!*pagination.perPage! - pagination.perPage!;
-
+            const nextPage = (pagination.currentPage!+1 <= pagination.lasPage ) ? pagination.currentPage!+1 : null;
             return await prisma.proprietario.findMany({
                 skip : jump,
                 take : pagination.perPage
@@ -58,8 +58,9 @@ export class ProprietarioService implements ProprietarioRepository{
             .then( res => {
                 return {
                     proprietarios: res,
-                    currentPage: pagination.currentPage,
                     perPage: pagination.perPage,
+                    currentPage: pagination.currentPage,
+                    nextPage : nextPage,
                     lastPage: pagination.lasPage,
                     previousPage : previous,
                     total: countElements,
@@ -69,8 +70,9 @@ export class ProprietarioService implements ProprietarioRepository{
         }else {
             return  {
                 proprietarios: [],
-                currentPage: 0,
                 perPage: 0,
+                currentPage: 0,
+                nextPage : null,
                 lastPage: 0,
                 previousPage : 0,
                 total: 0,

@@ -32,8 +32,9 @@ export type PaginationData = {
 
 export type ProprietarioResponseData = {
     proprietarios : ProprietarioData[],
-    currentPage : number,
     perPage : number,
+    currentPage : number,
+    nextPage : number | null,
     lastPage : number,
     previousPage : number |null,
     total : number

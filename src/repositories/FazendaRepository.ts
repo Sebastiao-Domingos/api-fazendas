@@ -41,8 +41,9 @@ export type SearchDataFazenda= FazendaDataUpdate & {
 
 export type FazendaDataResponse = {
     fazendas : FazendaData[],
-    currentPage : number,
     perPage : number,
+    currentPage : number,
+    nextPage: number | null,
     lastPage :number,
     previousPage : number | null
 }

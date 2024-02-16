@@ -11,7 +11,8 @@
             "bearerAuth" : {
                 "type" : "http",
                 "scheme" : "bearer",
-                "bearerFormat" : "JWT"
+                "bearerFormat" : "JWT",
+                "name" : "baererAuth"
             }
         },
         "responses" : {
@@ -110,8 +111,8 @@
                 "tags" : ["Administrador"],
                 "descrption" : "listar todas as administradores",
                 "summary" : "Rota que lista todas as administradores",
-                "security":{
-                    "bearerAuth" :["bearer"]
+                "securityRequirement":{
+                    "name" : "baererAuth"
                 },
                 "responses" : {
                     "200" : {
