@@ -3,7 +3,11 @@
     "info" : {
         "title" : "Fazendas",
         "description" :"Documnetation from fazendas api",
-        "version" : "1.0.0"   
+        "version" : "1.0.0" ,
+        "contact":{
+            "name": "Sebastião Afonso Domingos",
+            "email" : "sebastiaodomingos380@gmail.com"
+        }  
     },
     "basePath" : "/",
     "components" : {
@@ -111,8 +115,8 @@
                 "tags" : ["Administrador"],
                 "descrption" : "listar todas as administradores",
                 "summary" : "Rota que lista todas as administradores",
-                "securityRequirement":{
-                    "name" : "baererAuth"
+                "security":{
+                    "bearerAuth" :[""]
                 },
                 "responses" : {
                     "200" : {

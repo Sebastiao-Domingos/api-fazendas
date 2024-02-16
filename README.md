@@ -34,17 +34,19 @@ Para carregar as tabelas ja existentes no base para o prisma
 ## npx prisma db pull
 
 instalar o cors do axios
-## $ npm install cors
+## $ npm 
 
 
 instalar a tipagem do cors
 ## npm i --save-dev @types/cors
 
 instalar o swagger-ui-express
-## npm i swagger-ui-express
-
-instalar a tipagem 
+## npm i swagger-ui-express 
 ## npm i @types/swagger-ui-express
+
+instalar o swagger js docs
+## npm i swagger-jsdoc
+## npm i @types/swagger-jsdoc -D
 
 
 para upload de imagens
